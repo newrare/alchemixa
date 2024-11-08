@@ -51,6 +51,8 @@ The project will be running (with hot auto reload) on http://localhost:5001
 
 The project is configured to be deployed on Vercel. You can deploy the project by pushing the code to the Git repository. The deployment will be done automatically by Vercel.
 
+https://alchemixa.vercel.app/
+
 
 
 ## License
