@@ -10,12 +10,14 @@ from fasthtml.common    import *
 ###INIT###
 load_dotenv()
 
-header = [
-    Script(code='', src='https://cdn.tailwindcss.com'),
-    Link(rel="icon", href="/public/image/favicon.ico", type="image/x-icon")
-]
+headers = [Link(rel="icon", href="/public/image/favicon.ico", type="image/x-icon")]
 
-app, rt     = fast_app(live=True, hdrs=header)
+if "prod" == os.getenv("ENV"):
+    headers.append(Link(rel="stylesheet", href="/public/css/style.min.css"))
+else:
+    headers.append(Script(src='https://cdn.tailwindcss.com'))
+
+app, rt     = fast_app(live=True, hdrs=headers)
 supabase    = create_client(
     os.getenv("SUPABASE_URL"),
     os.getenv("SUPABASE_KEY")
@@ -31,26 +33,17 @@ def get_players():
     return response.data
 
 def card_players(players):
-    return Div(
-        *[Div(
+    results = []
+
+    for player in players:
+        results.append(Div(
             P(player.get("username")),
             P(player.get("mail")),
             Hr()
-        ) for player in players]
-    )
+        ))
 
-def card_style(title, image_url, description):
     return Div(
-        Div(
-            Img(src=image_url, _class="w-full h-48 object-cover"),
-            Div(
-                H2(title, _class="text-xl font-bold mb-2"),
-                P(description, _class="text-gray-700 text-base"),
-                _class="p-4"
-            ),
-            _class="bg-white shadow-md rounded-lg overflow-hidden"
-        ),
-        _class="max-w-sm mx-auto"
+        * results
     )
 
 
@@ -59,9 +52,8 @@ def card_style(title, image_url, description):
 @rt('/')
 def get():
     return Div(
-        P(PROJECT_TITLE),
-        card_players(get_players()),
-        card_style("Title", "/public/image/favicon.ico", "Description")
+        P(PROJECT_TITLE, cls="bg-zinc-100 text-4xl font-extrabold text-zinc-600"),
+        card_players(get_players())
     )
 
 
