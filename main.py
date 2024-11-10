@@ -23,8 +23,12 @@ supabase    = create_client(
     os.getenv("SUPABASE_KEY")
 )
 
+
+
 ###CONSTANT###
 PROJECT_TITLE = "Alchemixa"
+
+
 
 ###METHOD###
 def get_players():

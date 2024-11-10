@@ -12,6 +12,16 @@ Alchemixa is a Web Game Alchemist deck building.
 
 - Python 3.12
 - Pip
+- tailwindcss (ex: linux cli)
+
+
+
+## Alias (bashrc)
+
+```bash
+alias pyRun='python main.py'
+alias pyCss='tailwindcss -i ./tailwind.app.css -o ./public/css/style.min.css --minify'
+```
 
 
 
@@ -27,11 +37,13 @@ pip install -r requirements.txt
 ```
 
 
+
 ## Running the project
 
 To run the project, you need to set the environment variables in .env file.
 
 ```bash
+ENV=prod
 PYTHONPATH=.venv/lib/python3.12/site-packages
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_key
@@ -41,6 +53,7 @@ Then run the project using the following command:
 
 ```bash
 python main.py
+pyRun
 ```
 
 The project will be running (with hot auto reload) on http://localhost:5001
@@ -48,6 +61,12 @@ The project will be running (with hot auto reload) on http://localhost:5001
 
 
 ## Deployment
+
+Before deploying the project, you need to build the CSS file using the following command:
+
+```bash
+pyCss
+```
 
 The project is configured to be deployed on Vercel. You can deploy the project by pushing the code to the Git repository. The deployment will be done automatically by Vercel.
 
