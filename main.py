@@ -56,11 +56,29 @@ def card_players(players):
 @rt('/')
 def get():
     return Div(
-        P(PROJECT_TITLE, cls="bg-zinc-100 text-4xl font-extrabold text-zinc-600"),
-        card_players(get_players())
+        Div(
+            Ul(
+                Li("New game"),
+                Li("Continue"),
+                Li("Options"),
+                A(
+                    Li("Players"),
+                    href='/players',
+                    cls='hover:text-blue-500'
+                ),
+                Li("Credits"),
+                cls='font-extrabold text-orange-50 text-2xl text-right italic mx-16'
+            ),
+            cls='w-screen h-screen bg-orange-700/50 grid grid-cols-1 content-end pb-16'
+        ),
+        cls='w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")]'
     )
 
-
+@rt('/players')
+def get():
+    return Div(
+        card_players(get_players())
+    )
 
 ###START###
 serve()
