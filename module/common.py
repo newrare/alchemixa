@@ -6,19 +6,20 @@ import subprocess
 class Common:
 
     def count_commit():
-        try:
-            result = subprocess.run(
-                ["git", "rev-list", "--count", "HEAD"],
-                capture_output  =True,
-                text            =True,
-                check           =True
-            )
+        return None
+        #try:
+        #    result = subprocess.run(
+        #        ["git", "rev-list", "--count", "HEAD"],
+        #        capture_output  =True,
+        #        text            =True,
+        #        check           =True
+        #    )
 
-            return result.stdout.strip()
+        #    return result.stdout.strip()
 
-        except subprocess.CalledProcessError as e:
-            print(f"Error counting commits: {e}")
-            return None
+        #except subprocess.CalledProcessError as e:
+        #    print(f"Error counting commits: {e}")
+        #    return None
 
 
 
