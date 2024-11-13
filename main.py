@@ -3,7 +3,8 @@ import os
 
 from supabase           import create_client
 from dotenv             import load_dotenv
-from fasthtml.common    import *
+from fasthtml.common    import *;
+from view.title         import Title
 
 
 
@@ -57,31 +58,15 @@ def card_players(players):
 ###ROUTE###
 @rt('/')
 def get():
-    return Div(
-        Div(
-            Div(
-                H1("Alchemixa", cls='font-extrabold text-orange-400 text-6xl italic'),
-                Img(src='/public/image/favicon.ico'),
-                cls='mx-16 flex items-center animate__animated animate__pulse animate__infinite animate__slower'
-            ),
-            Div(
-                A("New game",   href='#'),
-                A("Continue",   href='#'),
-                A("Options",    href='#'),
-                A("Players",    href='/players', cls='hover:text-blue-500'),
-                A("Credits",    href='#'),
-                cls='flex flex-col font-extrabold text-orange-50 text-xl italic text-right mx-16'
-            ),
-            cls='w-screen h-screen bg-orange-700/60 grid justify-items-end content-end pb-16 gap-8'
-        ),
-        cls='w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")]'
-    )
+    return Title.get_view()
 
 @rt('/players')
 def get():
     return Div(
         card_players(get_players())
     )
+
+
 
 ###START###
 serve()
