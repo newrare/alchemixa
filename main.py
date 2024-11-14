@@ -15,15 +15,14 @@ env_local = os.path.join(os.path.dirname(__file__), '.env.local')
 load_dotenv(env_basic)
 load_dotenv(env_local, override=True)
 
-url     = str(os.getenv("URL"))
-headers = [Link(rel="icon", href="/public/image/favicon.ico", type="image/x-icon")]
+headers = [Link(rel = 'icon', href = '/public/image/favicon.ico', type = 'image/x-icon')]
 
 if "prod" == os.getenv("ENV"):
-    headers.append(Link(rel = "stylesheet", href = url + "/public/css/animate.min.css"))
-    headers.append(Link(rel = "stylesheet", href = url + "/public/css/style.min.css"))
+    headers.append(Link(rel = 'stylesheet', type = 'text/css', href = '/public/css/animate.min.css'))
+    headers.append(Link(rel = 'stylesheet', type = 'text/css', href = '/public/css/style.min.css'))
 else:
     headers.append(Script(src = 'https://cdn.tailwindcss.com'))
-    headers.append(Link(rel = "stylesheet", href = "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"))
+    headers.append(Link(rel = 'stylesheet', href = "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"))
 
 app, rt = fast_app(
     live = True,

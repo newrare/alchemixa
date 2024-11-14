@@ -5,15 +5,12 @@ from module.common      import Common
 
 class Title:
     def get_view():
-        version     = Common.get_version()
-        git         = Common.get_git_url()
-        logo        = Common.get_image_url('favicon.ico')
-        background  = Common.get_image_url('home.jpeg')
+        version = Common.get_version()
+        git     = Common.get_git_url()
 
         divTitle = Div(
-            H1('Alchemixa', cls = 'font-extrabold text-orange-400 text-6xl italic'),
-            Img(src = logo, alt = 'Alchemixa'),
-            cls='mx-16 flex items-center justify-end animate__animated animate__pulse animate__infinite animate__slower'
+            H1('Alchemixa', cls = 'font-extrabold text-orange-400 text-6xl italic gb-red-500 animate__animated animate__pulse animate__infinite animate__slower'),
+            cls='mx-16 flex justify-end'
         )
 
         divMenu = Div(
@@ -22,20 +19,26 @@ class Title:
             A('Options',    href = '#'),
             A('Players',    href = '/players', cls='hover:text-blue-500'),
             A('Credits',    href = '#'),
-            cls='flex flex-col font-extrabold text-orange-50 text-xl italic text-right mx-16'
+            cls='grid grid-cols-1 justify-items-end font-extrabold text-orange-50 text-xl italic gap-1 mx-16'
         )
 
         aVersion = A(
             version,
             href    = git,
             target  = '_blank',
-            cls     = 'text-blue-400 text-left mx-16 hover:text-blue-500'
+            cls     = 'text-blue-400 hover:text-blue-500'
+        )
+
+        divVersion = Div(
+            Img(src='/public/image/favicon.ico', cls='w-16 h-16'),
+            aVersion,
+            cls = 'flex items-end mx-16'
         )
 
         divCol = Div(
             divTitle,
             divMenu,
-            aVersion,
+            divVersion,
             cls = 'flex flex-col w-full gap-8'
         )
 
@@ -46,5 +49,5 @@ class Title:
 
         return Div(
             divOverlay,
-            cls = 'w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("' + background + '")]'
+            cls = 'w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")]'
         )
