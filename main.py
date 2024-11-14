@@ -9,7 +9,11 @@ from view.title         import Title
 
 
 ###INIT###
-load_dotenv()
+env_basic = os.path.join(os.path.dirname(__file__), '.env')
+env_local = os.path.join(os.path.dirname(__file__), '.env.local')
+
+load_dotenv(env_basic)
+load_dotenv(env_local, override=True)
 
 headers = [Link(rel="icon", href="/public/image/favicon.ico", type="image/x-icon")]
 
@@ -20,8 +24,13 @@ else:
     headers.append(Script(src='https://cdn.tailwindcss.com'))
     headers.append(Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"))
 
-app, rt     = fast_app(live=True, hdrs=headers)
-supabase    = create_client(
+app, rt = fast_app(
+    live = True,
+    pico = False,
+    hdrs = headers
+)
+
+supabase = create_client(
     os.getenv("SUPABASE_URL"),
     os.getenv("SUPABASE_KEY")
 )

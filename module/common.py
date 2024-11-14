@@ -1,37 +1,39 @@
 import os
-import subprocess
+import requests
 
+from bs4 import BeautifulSoup
 
 
 class Common:
 
+    def get_git_url():
+        return os.getenv('GIT')
+
+
+
     def count_commit():
-        return None
-        #try:
-        #    result = subprocess.run(
-        #        ["git", "rev-list", "--count", "HEAD"],
-        #        capture_output  =True,
-        #        text            =True,
-        #        check           =True
-        #    )
+        url = os.getenv('GIT')
 
-        #    return result.stdout.strip()
+        #parse url for get text with number of commit
+        response    = requests.get(url)
+        soup        = BeautifulSoup(response.text, 'html.parser')
+        span        = soup.find('span', {'class' : 'fgColor-default'}).text
 
-        #except subprocess.CalledProcessError as e:
-        #    print(f"Error counting commits: {e}")
-        #    return None
+        if span is None or 'Commits' not in span:
+            return '666'
+
+        #return only commit value
+        results = span.split(' ')
+
+        return str(results[0])
 
 
 
     def get_version():
-        #return string '666' if commit is None
         commit = Common.count_commit()
 
-        if commit is None:
-            return 'Version 666'
-
         #format commit
-        major = 'Version ' + str(os.getenv("VERSION_MAJOR")) + '.'
+        major = 'Version ' + str(os.getenv('VERSION_MAJOR')) + '.'
 
         if len(commit) > 2:
             return major + commit[:-2] + '.' + commit[-2:]
@@ -40,3 +42,14 @@ class Common:
             return major + '0.' + commit
 
         return major + commit.zfill(2)
+
+
+
+    def get_image_url(image):
+        #if url end with /, remove it
+        url = os.getenv('URL')
+
+        if url[-1] == '/':
+            url = url[:-1]
+
+        return url + '/public/image/' + image

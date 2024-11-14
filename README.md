@@ -30,21 +30,24 @@ alias pyCss='tailwindcss -i ./tailwind.app.css -o ./public/css/style.min.css --m
 Clone the repository, setup the virtual environment, activate it and install the dependencies.
 
 ```bash
-git clone
+git clone git@github.com:newrare/alchemixa.git
+cd alchemixa
+cp .env .env.local
 python -m .venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+Dont forget to install tailwindcss and configure supabase in your .env.local file.
 
 
 
-## Running the project
+## Running the project on local (dev)
 
-To run the project, you need to set the environment variables in .env file.
+To run the project, you need to set the environment variables in .env.local file.
 
 ```bash
-ENV=prod
-PYTHONPATH=.venv/lib/python3.12/site-packages
+ENV=dev
+URL=http://localhost:5001/
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_key
 ```
