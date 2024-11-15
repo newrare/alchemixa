@@ -4,13 +4,15 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class Common:
 
+class Common:
+    @staticmethod
     def get_git_url():
         return os.getenv('GIT')
 
 
 
+    @staticmethod
     def count_commit():
         url = os.getenv('GIT')
 
@@ -29,6 +31,7 @@ class Common:
 
 
 
+    @staticmethod
     def get_version():
         commit = Common.count_commit()
 
@@ -45,6 +48,7 @@ class Common:
 
 
 
+    @staticmethod
     def get_image_url(image):
         #if url end with /, remove it
         url = os.getenv('URL')

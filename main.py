@@ -1,21 +1,27 @@
 ###LIB###
 import os
 
-from supabase           import create_client
-from dotenv             import load_dotenv
-from fasthtml.common    import *;
-from view.title         import Title
+from dotenv                 import load_dotenv
+from fasthtml.common        import *;
+from starlette.testclient   import TestClient
+
+from module.translate       import Translate
+from view.player            import Player       as View_player
+from view.title             import Title        as View_title
 
 
 
-###INIT###
-env_basic = os.path.join(os.path.dirname(__file__), '.env')
-env_local = os.path.join(os.path.dirname(__file__), '.env.local')
+###ENV###
+#GLOBAL_CONSTANT = 'value'
+load_dotenv()
 
-load_dotenv(env_basic)
-load_dotenv(env_local, override=True)
 
-headers = [Link(rel = 'icon', href = '/public/image/favicon.ico', type = 'image/x-icon')]
+
+###HEADER###
+headers = [
+    Title(os.getenv("PROJECT_TITLE")),
+    Link(rel = 'icon', href = '/public/image/favicon.ico', type = 'image/x-icon')
+]
 
 if "prod" == os.getenv("ENV"):
     headers.append(Link(rel = 'stylesheet', type = 'text/css', href = '/public/css/animate.min.css'))
@@ -24,58 +30,53 @@ else:
     headers.append(Script(src = 'https://cdn.tailwindcss.com'))
     headers.append(Link(rel = 'stylesheet', href = "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"))
 
+
+
+###APP###
+debug = False
+
+if "dev" == os.getenv("ENV"):
+    debug = True
+
 app, rt = fast_app(
-    live = True,
-    pico = False,
-    hdrs = headers
-)
-
-supabase = create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_KEY")
+    debug   = debug,
+    live    = True,
+    pico    = False,
+    hdrs    = headers
 )
 
 
-
-###CONSTANT###
-PROJECT_TITLE = "Alchemixa"
-
-
-
-###METHOD###
-def get_players():
-    response = supabase.table("player").select("*").execute()
-
-    return response.data
-
-def card_players(players):
-    results = []
-
-    for player in players:
-        results.append(Div(
-            P(player.get("username")),
-            P(player.get("mail")),
-            Hr()
-        ))
-
-    return Div(
-        * results
-    )
 
 
 
 ###ROUTE###
 @rt('/')
 def get():
-    return Title.get_view()
+    return View_title.get_view()
 
 @rt('/players')
 def get():
+    return View_player.get_view()
+
+@rt('/test')
+def get():
+    msg = Translate.get(key = 'price', value= '50', number = 1, lang = 'fr')
+
     return Div(
-        card_players(get_players())
+        P(msg, cls = 'text-2xl'),
     )
 
 
 
-###START###
+###TEST###
+is_test: bool = False
+
+if "dev" == os.getenv("ENV") and is_test:
+    client = TestClient(app)
+
+    print(client.get('/'))
+
+
+
+###RUN###
 serve()
