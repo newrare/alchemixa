@@ -12,7 +12,6 @@ from view.title             import Title        as View_title
 
 
 ###ENV###
-#GLOBAL_CONSTANT = 'value'
 load_dotenv()
 
 
