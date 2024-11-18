@@ -57,6 +57,10 @@ def get():
 def get():
     return View_player.get_view()
 
+@rt('/options')
+def get():
+    return View_title.get_option()
+
 @rt('/test')
 def get():
     msg = Translate.get(key = 'price', value= '50', number = 1, lang = 'fr')

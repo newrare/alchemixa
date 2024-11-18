@@ -77,6 +77,19 @@ https://alchemixa.vercel.app/
 
 
 
+## Icon
+
+We use fastHTML icon library for the project [lucide-fasthtml](https://github.com/curtis-allan/lucide-fasthtml). You can find the icons at the following link:
+[Lucide Icons](https://lucide.dev/icons/)
+
+Example of usage:
+
+```python
+from lucide_fasthtml import Lucide as Icon
+
+Icon("sun", color="red", stroke_width="1.5", absolute_sw=True, size=16)
+```
+
 ## License
 
 This project is licensed under the MIT License.
