@@ -89,6 +89,9 @@ from lucide_fasthtml import Lucide as Icon
 
 Icon("sun", color="red", stroke_width="1.5", absolute_sw=True, size=16)
 ```
+Be careful, when you use an icon, a file is automatically created: icons.py
+
+
 
 ## License
 
