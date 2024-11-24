@@ -1,5 +1,10 @@
 {
-    "player"    : "joueur",
-    "players"   : "joueurs",
-    "price"     : "prix: {value}"
+    "choose_lang"   : "Veuillez choisir votre langue de prédilection.",
+    "continue"      : "Continuer",
+    "credits"       : "Credits",
+    "new_game"      : "Nouvelle partie",
+    "option_soon"   : "Nous ajouterons plusieurs options ici au fur et à mesure du développement.",
+    "options"       : "Options",
+    "ranking"       : "Classement",
+    "version"       : "Version"
 }

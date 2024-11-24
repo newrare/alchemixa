@@ -71,13 +71,41 @@ Before deploying the project, you need to build the CSS file using the following
 pyCss
 ```
 
-The project is configured to be deployed on Vercel. You can deploy the project by pushing the code to the Git repository. The deployment will be done automatically by Vercel.
+The project is configured to be deployed on Vercel. You can deploy the project by pushing the code to the Git repository. The deployment will be done automatically by [Vercel](https://alchemixa.vercel.app/).
 
-https://alchemixa.vercel.app/
+Don't forget to set secret the environment variables in the Vercel Web settings.
+Don't forget to add libraries to requirements.txt file before deploying (push on Git).
 
 
 
-## Icon
+## Translation
+
+The project is translated into several languages. You can add a new language by creating a new file in the `translation` folder. The file should be named as `<lang_iso_code>.json` (ex: `fr.json` for French). The file should contain the translations in the following format:
+
+```json
+{
+    "key": "Singular translation",
+    "keys": "Same to key but plural",
+    "string": "A variable {value} can be set to the string",
+    "key_not_found": "When the key does not exist in the current translation file, we use the key from the default language [en.json]"
+}
+```
+
+You can use the translation in the project using the following code:
+
+```python
+from module.translate import Translate
+
+msg = Translate.do(key = 'key')                    #get singular key value with default language
+msg = Translate.do(key = 'keys')                   #get plurial keys value with default language
+msg = Translate.do(key = 'key', number = 2)        #get plurial keys value with default language
+msg = Translate.do(key = 'string', value= 'foo')   #get string value and put variable to the string with default language
+msg = Translate.do(key = 'key', lang = 'fr')       #get singular key value for french language
+```
+
+
+
+## Icon and Font
 
 We use fastHTML icon library for the project [lucide-fasthtml](https://github.com/curtis-allan/lucide-fasthtml). You can find the icons at the following link:
 [Lucide Icons](https://lucide.dev/icons/)
@@ -90,6 +118,8 @@ from lucide_fasthtml import Lucide as Icon
 Icon("sun", color="red", stroke_width="1.5", absolute_sw=True, size=16)
 ```
 Be careful, when you use an icon, a file is automatically created: icons.py
+
+We can use the custom CSS class `.font-title` for H1 to H6 elements.
 
 
 

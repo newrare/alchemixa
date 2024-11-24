@@ -20,7 +20,7 @@ supabase = create_client(
 
 
 
-class Player:
+class Model_player:
     def __init__(
             self,
             id          : int,
@@ -39,7 +39,7 @@ class Player:
 
 
     @classmethod
-    def _database_to_player(cls, response) -> Optional['Player']:
+    def _database_to_player(cls, response) -> Optional['Model_player']:
         #check response
         if not response.data:
             return None
@@ -58,7 +58,7 @@ class Player:
 
 
     @classmethod
-    def from_id(cls, id: int) -> Optional['Player']:
+    def from_id(cls, id: int) -> Optional['Model_player']:
         response = supabase.table('player').select('*').eq('id', id).execute()
 
         return cls._database_to_player(response)
@@ -66,7 +66,7 @@ class Player:
 
 
     @classmethod
-    def from_username(cls, username: str) -> Optional['Player']:
+    def from_username(cls, username: str) -> Optional['Model_player']:
         response = supabase.table('player').select('*').eq('username', username).execute()
 
         return cls._database_to_player(response)
@@ -74,7 +74,7 @@ class Player:
 
 
     @classmethod
-    def from_mail(cls, mail: str) -> Optional['Player']:
+    def from_mail(cls, mail: str) -> Optional['Model_player']:
         response = supabase.table('player').select('*').eq('mail', mail).execute()
 
         return cls._database_to_player(response)
@@ -82,7 +82,7 @@ class Player:
 
 
     @classmethod
-    def create(cls, username: str, mail: str) -> 'Player':
+    def create(cls, username: str, mail: str) -> 'Model_player':
         #set attributes
         created_at = datetime.timezone.utc.now()
         updated_at = datetime.timezone.utc.now()
@@ -127,7 +127,7 @@ class Player:
 
 
     @staticmethod
-    def get_players() -> List['Player']:
+    def get_players() -> List['Model_player']:
         #get all players from database and check response
         response = supabase.table('player').select('*').execute()
 
@@ -139,7 +139,7 @@ class Player:
         players = []
 
         for results in response.data:
-            players.append(Player(
+            players.append(Model_player(
                 id          = results['id'],
                 username    = results['username'],
                 mail        = results['mail'],

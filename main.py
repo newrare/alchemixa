@@ -3,11 +3,12 @@ import os
 
 from dotenv                 import load_dotenv
 from fasthtml.common        import *;
-from starlette.testclient   import TestClient
+from functools              import wraps
 
+from module.screen_ranking  import Screen_ranking
+from module.screen_title    import Screen_title
+from module.test            import Test
 from module.translate       import Translate
-from view.player            import Player       as View_player
-from view.title             import Title        as View_title
 
 
 
@@ -19,7 +20,11 @@ load_dotenv()
 ###HEADER###
 headers = [
     Title(os.getenv("PROJECT_TITLE")),
-    Link(rel = 'icon', href = '/public/image/favicon.ico', type = 'image/x-icon')
+    Link(rel = 'preconnect',    href = 'https://fonts.googleapis.com'),
+    Link(rel = 'preconnect',    href = 'https://fonts.gstatic.com', crossorigin=''),
+    Link(rel = 'stylesheet',    href = 'https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=New+Rocker&display=swap'),
+    Link(rel = 'icon',          href = '/public/image/favicon.ico', type = 'image/x-icon'),
+    Link(rel = 'stylesheet',    href = '/public/css/global.css',    type = 'text/css')
 ]
 
 if "prod" == os.getenv("ENV"):
@@ -39,45 +44,66 @@ if "dev" == os.getenv("ENV"):
 
 app, rt = fast_app(
     debug   = debug,
-    live    = True,
+    live    = False,
     pico    = False,
     hdrs    = headers
 )
 
 
 
+###MIDDLEWARE###
+def middleware_security(f):
+    @wraps(f)
+    async def decorator(*args, **kwargs): #session or request is also possible before *args
+        #print('Code your security for admin routes here!')
+        return await f(*args, **kwargs)
+    return decorator
+
 
 
 ###ROUTE###
-@rt('/')
-def get():
-    return View_title.get_view()
+@rt('/', name = 'screen_title')
+def get(session):
+    return Screen_title.view_content(session.get('lang'))
 
-@rt('/players')
-def get():
-    return View_player.get_view()
 
-@rt('/options')
-def get():
-    return View_title.get_option()
 
-@rt('/test')
-def get():
-    msg = Translate.get(key = 'price', value= '50', number = 1, lang = 'fr')
+@rt('/lang/{lang}')
+def post(session, lang: str):
+    Translate.use(session, lang)
 
-    return Div(
-        P(msg, cls = 'text-2xl'),
-    )
+    return Screen_title.view_content(lang)
+
+
+
+@rt('/ranking', name = 'screen_ranking')
+def get(session):
+    return Screen_ranking.view_content(session.get('lang'))
+
+
+
+@rt('/options', name = 'screen_title_option')
+def get(session):
+    return Screen_title.view_option(session.get('lang'))
+
+
+
+@rt('/admin', name = 'admin')
+@middleware_security
+async def get():
+    return P('Admin')
 
 
 
 ###TEST###
+@rt('/test')
+def get(session):
+    return P('Test')
+
+
+
 is_test: bool = False
-
-if "dev" == os.getenv("ENV") and is_test:
-    client = TestClient(app)
-
-    print(client.get('/'))
+Test.check(is_test, app)
 
 
 

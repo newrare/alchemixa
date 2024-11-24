@@ -1,6 +1,10 @@
 {
-    "player"    : "player",
-    "players"   : "players",
-    "price"     : "price: {value}",
-    "find"      : "Find"
+    "choose_lang"   : "Please choose your preferred language.",
+    "continue"      : "Continue",
+    "credits"       : "Credits",
+    "new_game"      : "New game",
+    "option_soon"   : "We will add several options here as development progresses.",
+    "options"       : "Options",
+    "ranking"       : "Ranking",
+    "version"       : "Version"
 }

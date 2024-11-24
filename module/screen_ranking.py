@@ -1,11 +1,13 @@
-from fasthtml.common    import *
-from model.player       import Player as ModelPlayer
+from fasthtml.common        import *
+from module.model_player    import Model_player
 
 
 
-class Player:
-    def get_view():
-        players = ModelPlayer.get_players()
+class Screen_ranking:
+
+    @classmethod
+    def view_content(cls, lang: str = 'en'):
+        players = Model_player.get_players()
 
         results = []
 

@@ -1,19 +1,21 @@
 import os
 import requests
 
-from bs4 import BeautifulSoup
+from bs4                import BeautifulSoup
+
+from module.translate   import Translate
 
 
 
 class Common:
     @staticmethod
-    def get_git_url():
+    def git_url() -> str:
         return os.getenv('GIT')
 
 
 
     @staticmethod
-    def count_commit():
+    def count_commit() -> str:
         url = os.getenv('GIT')
 
         #parse url for get text with number of commit
@@ -32,11 +34,11 @@ class Common:
 
 
     @staticmethod
-    def get_version():
+    def version(lang: str = 'en') -> str:
         commit = Common.count_commit()
 
         #format commit
-        major = 'Version ' + str(os.getenv('VERSION_MAJOR')) + '.'
+        major = Translate.do(lang = lang, key = 'version') + ' ' + str(os.getenv('VERSION_MAJOR')) + '.'
 
         if len(commit) > 2:
             return major + commit[:-2] + '.' + commit[-2:]
@@ -45,15 +47,3 @@ class Common:
             return major + '0.' + commit
 
         return major + commit.zfill(2)
-
-
-
-    @staticmethod
-    def get_image_url(image):
-        #if url end with /, remove it
-        url = os.getenv('URL')
-
-        if url[-1] == '/':
-            url = url[:-1]
-
-        return url + '/public/image/' + image
