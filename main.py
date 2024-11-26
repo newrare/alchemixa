@@ -24,7 +24,9 @@ headers = [
     Link(rel = 'preconnect',    href = 'https://fonts.gstatic.com', crossorigin=''),
     Link(rel = 'stylesheet',    href = 'https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=New+Rocker&display=swap'),
     Link(rel = 'icon',          href = '/public/image/favicon.ico', type = 'image/x-icon'),
-    Link(rel = 'stylesheet',    href = '/public/css/global.css',    type = 'text/css')
+    Link(rel = 'stylesheet',    href = '/public/css/global.css',    type = 'text/css'),
+    Link(rel = 'stylesheet',    href = '/public/css/rain.css',      type = 'text/css'),
+    Script(src = '/public/js/rain.js', defer = True)
 ]
 
 if "prod" == os.getenv("ENV"):
@@ -44,7 +46,7 @@ if "dev" == os.getenv("ENV"):
 
 app, rt = fast_app(
     debug   = debug,
-    live    = False,
+    live    = True,
     pico    = False,
     hdrs    = headers
 )

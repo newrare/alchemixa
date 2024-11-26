@@ -1,9 +1,9 @@
-from fasthtml.common            import *
-from lucide_fasthtml            import Lucide as Icon
+from fasthtml.common        import *
+from lucide_fasthtml        import Lucide as Icon
 
-from module.common              import Common
-from module.component_link      import Component_link
-from module.translate           import Translate
+from module.common          import Common
+from module.component_link  import Component_link
+from module.translate       import Translate
 
 
 
@@ -12,8 +12,8 @@ class Screen_title:
     @classmethod
     def view_content(cls, lang: str = 'en'):
         divTitle = Div(
-            H1('Alchemixa', cls = 'font-extrabold text-orange-400 text-6xl font-title gb-red-500 animate__animated animate__pulse animate__infinite animate__slower'),
-            Icon('test-tube-diagonal', color='orange'),
+            H1('Alchemixa', cls = 'font-extrabold text-purple-400 text-6xl font-title animate__animated animate__pulse animate__infinite animate__slower'),
+            #Icon('test-tube-diagonal', color='#C083FC'),
             cls='mx-16 flex justify-end'
         )
 
@@ -26,14 +26,16 @@ class Screen_title:
             cls='grid grid-cols-1 justify-items-end font-extrabold text-orange-50 text-xl italic gap-2 mx-16'
         )
 
+        linkVersion = Component_link(
+            color   = 'white',
+            text    = Common.version(lang),
+            href    = Common.git_url(),
+            blank   = True
+        )
+
         divVersion = Div(
-            Img(src='/public/image/favicon.ico', cls='w-16 h-16'),
-            Component_link(
-                text = Common.version(lang),
-                href = Common.git_url(),
-                blank = True
-            ).do(),
-            cls = 'flex items-end mx-16'
+            linkVersion.do(),
+            cls = 'bg-purple-500/70 rounded-lg px-2 mx-16 w-fit'
         )
 
         divCol = Div(
@@ -45,12 +47,12 @@ class Screen_title:
 
         divOverlay = Div(
             divCol,
-            cls = 'w-screen h-screen grid justify-items-end content-end bg-black/10 pb-16'
+            cls = 'w-screen h-screen grid justify-items-end content-end pb-16'
         )
 
         return Div(
             divOverlay,
-            cls = 'w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")]',
+            cls = 'w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")] rain-container',
             id  = 'title'
         )
 
@@ -111,4 +113,3 @@ class Screen_title:
             id = 'title',
             cls='w-screen h-screen bg-no-repeat bg-center bg-cover bg-[url("/public/image/home.jpeg")]'
         )
-

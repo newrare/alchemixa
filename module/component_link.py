@@ -47,6 +47,11 @@ class Component_link:
         #default style: text-purple-500 hover:text-purple-300
         style = 'text-' + self.color + '-500 hover:text-' + self.color + '-300'
 
+        if self.color == 'white':
+            style = 'text-white'
+        elif self.color == 'black':
+            style = 'text-black'
+
         return A(
             self.text,
             href    = self.href,
