@@ -1,41 +1,32 @@
-import os
-
-from dotenv             import load_dotenv
-from fasthtml.common    import A
+from fasthtml.common    import A, Button
 
 from module.translate   import Translate
-
-load_dotenv()
 
 
 
 class Component_link:
     def __init__(
             self,
-            href    : str   = '#',
-            key     : str   = None,
-            text    : str   = None,
-            color   : str   = os.getenv('COLOR_PRIMARY'),
-            blank   : bool  = False,
+            href        : str   = '#',
+            key         : str   = None,
+            text        : str   = None,
+            isBlank     : bool  = False,
+            isButton    : bool  = False
         ) -> None:
 
-        self.href   = href
-        self.key    = key
-        self.text   = text
-        self.color  = color
-        self.blank  = blank
-
-
-
-    def __str__(self) -> str:
-        return str(self.component())
+        self.href       = href
+        self.key        = key
+        self.text       = text
+        self.isBlank    = isBlank
+        self.isButton   = isButton
 
 
 
     def do(self) -> A:
+        #attributes
         target = ''
 
-        if self.blank:
+        if self.isBlank:
             target = 'target="_blank"'
 
         if self.key and not self.text:
@@ -44,19 +35,36 @@ class Component_link:
         if not self.text:
             self.text = self.href
 
-        #default style: text-purple-500 hover:text-purple-300
-        style = 'text-' + self.color + '-500 hover:text-' + self.color + '-300'
+        #button
+        if self.isButton:
+            button = Button(
+                self.text,
+                cls = '''
+                    px-2
+                    rounded-lg
+                    border-x-4
+                    bg-purple-500/70
+                    text-purple-200
+                    border-purple-400
+                    hover:text-green-300
+                    hover:border-green-300
+                '''
+            )
 
-        if self.color == 'white':
-            style = 'text-white'
-        elif self.color == 'black':
-            style = 'text-black'
+            return A(
+                button,
+                href    = self.href,
+                target  = target
+            )
 
+        #link
         return A(
             self.text,
             href    = self.href,
             target  = target,
-            cls     = style + '''
+            cls     = '''
+                text-purple-300
+                hover:text-purple-600
                 hover:overline
             '''
         )

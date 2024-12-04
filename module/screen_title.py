@@ -1,9 +1,10 @@
-from fasthtml.common        import *
-from lucide_fasthtml        import Lucide as Icon
+from fasthtml.common            import *
 
-from module.common          import Common
-from module.component_link  import Component_link
-from module.translate       import Translate
+from module.common              import Common
+from module.component_button    import Component_button
+from module.component_link      import Component_link
+from module.component_title     import Component_title
+from module.translate           import Translate
 
 
 
@@ -12,8 +13,7 @@ class Screen_title:
     @classmethod
     def view_content(cls, lang: str = 'en'):
         divTitle = Div(
-            H1('Alchemixa', cls = 'font-extrabold text-purple-400 text-6xl font-title animate__animated animate__pulse animate__infinite animate__slower'),
-            #Icon('test-tube-diagonal', color='#C083FC'),
+            Component_title(text = 'Alchemixa', size = 'extra', isAnimated = True).do(),
             cls='mx-16 flex justify-end'
         )
 
@@ -27,15 +27,15 @@ class Screen_title:
         )
 
         linkVersion = Component_link(
-            color   = 'white',
             text    = Common.version(lang),
             href    = Common.git_url(),
-            blank   = True
+            isBlank = True,
+            isButton= True
         )
 
         divVersion = Div(
             linkVersion.do(),
-            cls = 'bg-purple-500/70 rounded-lg px-2 mx-16 w-fit'
+            cls = 'mx-16 w-fit'
         )
 
         divCol = Div(
@@ -47,7 +47,7 @@ class Screen_title:
 
         divOverlay = Div(
             divCol,
-            cls = 'w-screen h-screen grid justify-items-end content-end pb-16'
+            cls = 'w-screen h-screen min-h-96 grid justify-items-end content-end pb-16'
         )
 
         return Div(
@@ -83,19 +83,13 @@ class Screen_title:
                 cls='px-4 py-2 font-semibold'
             ),
             Div(
-                Button(
-                    "English",
+                Div(
+                    Component_button(text = "English",  isSelected = selected_en).do(),
                     hx_post="/lang/en",
-                    hx_target="#title",
-                    hx_swap="innerHTML",
-                    cls='bg-purple-600 font-extrabold px-4 py-2 rounded-lg border-y-2 hover:bg-green-700 ' + selected_en
                 ),
-                Button(
-                    "Français",
+                Div(
+                    Component_button(text = "Français",  isSelected = selected_fr).do(),
                     hx_post="/lang/fr",
-                    hx_target="#title",
-                    hx_swap="innerHTML",
-                    cls='bg-purple-600 font-extrabold px-4 py-2 rounded-lg border-y-2 hover:bg-green-700 ' + selected_fr
                 ),
                 cls='flex flex-row justify-around mx-4 mb-2'
             ),
