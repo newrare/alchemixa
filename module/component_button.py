@@ -11,6 +11,7 @@ class Component_button:
             key         : str   = None,
             text        : str   = None,
             icon        : str   = None,
+            target      : str   = None,
             isSelected  : bool  = False,
             isDisabled  : bool  = False,
             isUpercase  : bool  = False
@@ -20,6 +21,7 @@ class Component_button:
         self.key        = key
         self.text       = text
         self.icon       = icon
+        self.target     = target
         self.isSelected = isSelected
         self.isDisabled = isDisabled
         self.isUpercase = isUpercase

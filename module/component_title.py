@@ -7,21 +7,22 @@ from module.translate   import Translate
 class Component_title:
     def __init__(
             self,
-            key         : str       = None,
-            text        : str       = None,
-            size        : str       = 'medium', #enum('tiny', 'small', 'medium', 'large', 'extra')
-            isAnimated  : bool      = False,
-            isUpercase  : bool      = False,
-            isSecondary : bool      = False,
+            text        : str   = None,
+            key         : str   = None,
+            size        : str   = 'medium', #enum('tiny', 'small', 'medium', 'large', 'extra')
+            isAnimated  : bool  = False,
+            isUpercase  : bool  = False,
+            isSecondary : bool  = False,
+            isShadow    : bool  = False
         ) -> None:
 
-        self.key        = key
-        self.text       = text
-        self.size       = size
-        self.isAnimated = isAnimated
-        self.isUpercase = isUpercase
-        self.isSecondary= isSecondary
-
+        self.key            = key
+        self.text           = text
+        self.size           = size
+        self.isAnimated     = isAnimated
+        self.isUpercase     = isUpercase
+        self.isSecondary    = isSecondary
+        self.isShadow       = isShadow
 
 
     def do(self) -> Div:
@@ -45,6 +46,9 @@ class Component_title:
 
         if self.isAnimated:
             style += ' animate__animated animate__pulse animate__infinite animate__slower'
+
+        if self.isShadow:
+            style += ' text-shadow-black'
 
         if self.size == 'extra':
             title = H1(self.text, cls = style + ' text-6xl')

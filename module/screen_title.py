@@ -3,6 +3,7 @@ from fasthtml.common            import *
 from module.common              import Common
 from module.component_button    import Component_button
 from module.component_link      import Component_link
+from module.component_list      import Component_list
 from module.component_title     import Component_title
 from module.translate           import Translate
 
@@ -13,17 +14,21 @@ class Screen_title:
     @classmethod
     def view_content(cls, lang: str = 'en'):
         divTitle = Div(
-            Component_title(text = 'Alchemixa', size = 'extra', isAnimated = True).do(),
+            Component_title(text = 'Alchemixa', size = 'extra', isAnimated = True, isShadow = True).do(),
             cls='mx-16 flex justify-end'
         )
 
+        elements = [
+            {'title': Translate.do(lang = lang, key = 'new_game'),  'href': '#'},
+            {'title': Translate.do(lang = lang, key = 'continue'),  'href': '#'},
+            {'title': Translate.do(lang = lang, key = 'options'),   'href': 'options'},
+            {'title': Translate.do(lang = lang, key = 'ranking'),   'href': 'ranking'},
+            {'title': Translate.do(lang = lang, key = 'credits'),   'href': '#'}
+        ]
+
         divMenu = Div(
-            A(Translate.do(lang = lang, key = 'new_game'),  href = '#',         cls='bg-purple-500/70 px-2 w-48 hover:text-green-300 rounded-lg border-x-4 hover:border-green-300'),
-            A(Translate.do(lang = lang, key = 'continue'),  href = '#',         cls='bg-purple-500/70 px-2 w-48 hover:text-green-300 rounded-lg border-x-4 hover:border-green-300'),
-            A(Translate.do(lang = lang, key = 'options'),   href = 'options',   cls='bg-purple-500/70 px-2 w-48 hover:text-green-300 rounded-lg border-x-4 hover:border-green-300'),
-            A(Translate.do(lang = lang, key = 'ranking'),   href = 'ranking',   cls='bg-purple-500/70 px-2 w-48 hover:text-green-300 rounded-lg border-x-4 hover:border-green-300'),
-            A(Translate.do(lang = lang, key = 'credits'),   href = '#',         cls='bg-purple-500/70 px-2 w-48 hover:text-green-300 rounded-lg border-x-4 hover:border-green-300'),
-            cls='grid grid-cols-1 justify-items-end font-extrabold text-orange-50 text-xl italic gap-2 mx-16'
+            Component_list(elements = elements, text = 'right').do(),
+            cls='mx-16 justify-items-end'
         )
 
         linkVersion = Component_link(
