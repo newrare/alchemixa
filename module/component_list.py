@@ -5,7 +5,7 @@ from fasthtml.common import Div, A
 class Component_list:
     def __init__(
             self,
-            elements    : list  = None,     #{'title': 'title_value', 'href': 'href_value'}
+            elements    : list  = None,     #{'title': 'title_value', 'href': 'href_value', 'click': 'modal_id'}
             text        : str   = 'left',   #enum('left', 'center', 'right')
             isUpercase  : bool  = False,
             isSecondary : bool  = False
@@ -42,8 +42,24 @@ class Component_list:
             style += ' text-right'
 
         links = []
-        for element in self.elements:
-            link = A(element['title'], href = element['href'], cls = style)
+        for values in self.elements:
+            if 'href' not in values:
+                values['href'] = '#'
+
+            if 'click' in values and values['click'] != '':
+                link = A(
+                    values['title'],
+                    href    = values['href'],
+                    onclick = 'modal_open_by_id("' + values['click'] + '")',
+                    cls     = style
+                )
+            else:
+                link = A(
+                    values['title'],
+                    href    = values['href'],
+                    cls     = style
+                )
+
             links.append(link)
 
         #list

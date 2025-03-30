@@ -12,9 +12,9 @@ class Component_button:
             text        : str   = None,
             icon        : str   = None,
             target      : str   = None,
-            isSelected  : bool  = False,
-            isDisabled  : bool  = False,
-            isUpercase  : bool  = False
+            is_selected : bool  = False,
+            is_disabled : bool  = False,
+            is_upercase : bool  = False
 
         ) -> None:
 
@@ -22,9 +22,9 @@ class Component_button:
         self.text       = text
         self.icon       = icon
         self.target     = target
-        self.isSelected = isSelected
-        self.isDisabled = isDisabled
-        self.isUpercase = isUpercase
+        self.is_selected = is_selected
+        self.is_disabled = is_disabled
+        self.is_upercase = is_upercase
 
 
 
@@ -33,20 +33,20 @@ class Component_button:
         if self.key and not self.text:
             self.text = Translate.get(key = self.key)
 
-        if self.isUpercase:
+        if self.is_upercase:
             self.text = self.text.upper()
         else:
             self.text = self.text.capitalize()
 
-        styleSelected = ''
+        style_selected = ''
 
         style = 'bg-purple-600 hover:bg-green-700'
 
-        if self.isDisabled:
+        if self.is_disabled:
             style = 'bg-gray-400 text-gray-200 cursor-not-allowed'
 
-        if self.isSelected:
-            styleSelected = 'outline-dashed outline-green-700 outline-2 outline-offset-4'
+        if self.is_selected:
+            style_selected = 'outline-dashed outline-green-700 outline-2 outline-offset-4'
 
         #content
         icon = None
@@ -61,6 +61,7 @@ class Component_button:
                 flex
                 justify-center
                 items-center
+                text-white
                 gap-2
             '''
         )
@@ -68,7 +69,7 @@ class Component_button:
         #button
         return Button(
             content,
-            cls = style + ' ' + styleSelected + '''
+            cls = style + ' ' + style_selected + '''
                 px-4
                 py-2
                 rounded-lg

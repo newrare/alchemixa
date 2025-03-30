@@ -19,14 +19,14 @@ load_dotenv()
 
 ###HEADER###
 headers = [
-    Title(os.getenv("PROJECT_TITLE")),
     Link(rel = 'preconnect',    href = 'https://fonts.googleapis.com'),
     Link(rel = 'preconnect',    href = 'https://fonts.gstatic.com', crossorigin=''),
     Link(rel = 'stylesheet',    href = 'https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=New+Rocker&display=swap'),
     Link(rel = 'icon',          href = '/public/image/favicon.ico', type = 'image/x-icon'),
     Link(rel = 'stylesheet',    href = '/public/css/global.css',    type = 'text/css'),
     Link(rel = 'stylesheet',    href = '/public/css/rain.css',      type = 'text/css'),
-    Script(src = '/public/js/rain.js', defer = True)
+    Script(src = '/public/js/rain.js',      defer = True),
+    Script(src = '/public/js/global.js',    defer = True)
 ]
 
 if "prod" == os.getenv("ENV"):
@@ -44,11 +44,15 @@ debug = False
 if "dev" == os.getenv("ENV"):
     debug = True
 
+def inject_title(req, sess):
+    req.injects = [Title(os.getenv("PROJECT_TITLE")), *req.injects]
+
 app, rt = fast_app(
     debug   = debug,
     live    = True,
     pico    = False,
-    hdrs    = headers
+    hdrs    = headers,
+    before  = inject_title
 )
 
 
@@ -74,19 +78,13 @@ def get(session):
 def post(session, lang: str):
     Translate.use(session, lang)
 
-    return Screen_title.view_content(lang)
+    return RedirectResponse(url='/', status_code=303)
 
 
 
 @rt('/ranking', name = 'screen_ranking')
 def get(session):
     return Screen_ranking.view_content(session.get('lang'))
-
-
-
-@rt('/options', name = 'screen_title_option')
-def get(session):
-    return Screen_title.view_option(session.get('lang'))
 
 
 
