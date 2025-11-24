@@ -69,7 +69,7 @@ class Screen_title:
         option = Div(
             Div(
                 H2("Options", cls='text-4xl font-bold'),
-                A(Button("X", cls='px-4 bg-purple-600 rounded-full border-x-2 hover:bg-purple-700'), href = '/'),
+                A(Button("X", cls='px-4 bg-purple-600 rounded-full border-x-2 hover:bg-purple-700'), onclick = 'modal_close_by_id("modal_option")'),
                 cls='flex flex-row justify-between mx-4 pt-4'
             ),
             Hr(cls='h-1 rounded bg-purple-300 border-0 mx-4'),
